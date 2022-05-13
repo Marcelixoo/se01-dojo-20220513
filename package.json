@@ -1,0 +1,22 @@
+{
+  "name": "se01-dojo-20220513",
+  "version": "1.0.0",
+  "description": "Solutions for the exercises proposed during SE_01 assessments at CODE University",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marcelixoo/se01-dojo-20220513.git"
+  },
+  "author": "Marcelo T. dos Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marcelixoo/se01-dojo-20220513/issues"
+  },
+  "homepage": "https://github.com/Marcelixoo/se01-dojo-20220513#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
