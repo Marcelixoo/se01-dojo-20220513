@@ -37,3 +37,36 @@
 Instead of lights being only on and off, they can now shine in either Red, Green or Blue. When the
 Player toggles them they cycle through Red -> Green -> Blue -> Off. The rest of the game stays
 the same.
+
+# Exercise 4: Random Boards 
+
+## Instructions
+
+Starting out with the same game all the time is hardly fun, so change the game setup in a way that
+presents a different board every time. Use the 5x5 board without colors for this exercise.
+Attention:  not all boards are solvable, but you want  your game to be.
+There is an easy and a hard way to do this.
+The hard way  is to randomly turn on some lights and  then check if the board is solvable. This is
+hard because you need to write an algorithm to solve the game.
+The easy way  is to start with an empty board, and  then do a random number of moves like the
+player would.
+
+### Hints:
+Random Integers can be generated like this (example creates a random number between 0 and 5 inclusive):
+
+Python https://docs.python.org/3.10/library/random.html
+```python
+import random
+a = random.randint(0, 5)
+```
+
+Javascript https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+```js
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+let a = getRandomInt(0, 5);
+```
