@@ -58,22 +58,28 @@ const toggle = (status) => status === "on" ? "off" : "on";
 
 const adjacents = (x, y) => {
     const all = [
-        `${x - 1},${y}`,
-        `${x + 1},${y}`,
-        `${x},${y + 1}`,
-        `${x},${y - 1}`,
+        [x - 1, y],
+        [x + 1, y],
+        [x, y + 1],
+        [x, y - 1],
     ];
 
-    const withoutOfflimits = all.filter((coordinate) => {
-        const [x, y] = coordinate.split(',');
+    const withoutOfflimits = all.filter((coordinates) => {
+        const [x, y] = coordinates;
 
-        const xAsInt = parseInt(x);
-        const yAsInt = parseInt(y);
-
-        return [xAsInt, yAsInt].every((value) => value >= 0 && value < BOARD_SIZE);
+        return [x, y].every((value) => value >= 0 && value < BOARD_SIZE);
     });
 
     return withoutOfflimits;
+}
+
+const fromStringsToIntegers = (coordinates) => {
+    const [x, y] = coordinates.split(',');
+
+    const xAsInt = parseInt(x);
+    const yAsInt = parseInt(y);
+
+    return [xAsInt, yAsInt];
 }
 
 const hasWon = () => {
@@ -82,18 +88,18 @@ const hasWon = () => {
         .every((status) => status === "off"));
 }
 
-
 const play = async () => {
     displayBoard(lights);
 
     await askForCoordinates();
 
     if (currentCoordinate) {
-        const [x, y] = currentCoordinate.split(',');
+        const [x, y] = fromStringsToIntegers(currentCoordinate);
 
-        adjacents(parseInt(x), parseInt(y)).forEach((coordinate) => {
-            const [x, y] = coordinate.split(',');
-            lights[x][y] = toggle(lights[x][y]);
+        
+        adjacents(x, y).forEach((coordinates) => {
+            const [adjX, adjY] = coordinates;
+            lights[adjX][adjY] = toggle(lights[adjX][adjY]);
         })
         
         lights[x][y] = toggle(lights[x][y]);
