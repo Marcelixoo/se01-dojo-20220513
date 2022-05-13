@@ -28,3 +28,12 @@
 ## Instructions
 
  Extend the board to also allow a 5x5 grid. The rest of the game play stays the same.
+
+
+# Exercise 3: Let there be color
+
+## Instructions
+
+Instead of lights being only on and off, they can now shine in either Red, Green or Blue. When the
+Player toggles them they cycle through Red -> Green -> Blue -> Off. The rest of the game stays
+the same.
