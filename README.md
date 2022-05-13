@@ -2,6 +2,8 @@
 
 This repository holds the code implemented during the assessments of the module SE_01 Software Development Basics at CODE University of Applied Sciences during the Spring Semester 2022.
 
+!["Screenshot of a round of Lights Out"](logo.png "Screenshot of a round of Lights Out")
+
 ## The Challenge
 
 Write a piece of software which allows you to play the logic puzzle Lights Out.
