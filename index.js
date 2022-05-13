@@ -2,24 +2,17 @@
 
 const inquirer = require('inquirer');
 
-const BOARD_SIZE = 3;
+const BOARD_SIZE =5;
 
-const lights = {
-    "0": {
-        "0": "on",
-        "1": "on",
-        "2": "on",
-    },
-    "1": {
-        "0": "on",
-        "1": "on",
-        "2": "on",
-    },
-    "2": {
-        "0": "on",
-        "1": "on",
-        "2": "on",
-    },
+const rows = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => "on"));
+const lights = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => ({...rows})));
+
+const choices = () => {
+    const choicesAsMultiArray = Object.entries(lights).map((entry) => {
+        const [i, row] = entry;
+        return Object.keys(row).map(j => `${i},${j}`);
+    });
+    return choicesAsMultiArray.flat(1);
 };
 
 let currentCoordinate;
@@ -28,17 +21,7 @@ async function askForCoordinates() {
         name: 'coordinate',
         type: 'list',
         message: 'Pick a coordinate to toggle',
-        choices: [
-            '0,0',
-            '0,1',
-            '0,2',
-            '1,0',
-            '1,1',
-            '1,2',
-            '2,0',
-            '2,1',
-            '2,2',
-        ],
+        choices: choices(),
     });
 
     currentCoordinate = answer.coordinate;
