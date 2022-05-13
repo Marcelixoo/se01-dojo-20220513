@@ -104,17 +104,14 @@ const play = async () => {
 
     await askForCoordinates();
 
-    if (currentCoordinate) {
-        const [x, y] = fromStringsToIntegers(currentCoordinate);
+    const [x, y] = fromStringsToIntegers(currentCoordinate);
+    
+    adjacents(x, y).forEach((coordinates) => {
+        const [adjX, adjY] = coordinates;
+        lights[adjX][adjY] = toggle(lights[adjX][adjY]);
+    })
 
-        
-        adjacents(x, y).forEach((coordinates) => {
-            const [adjX, adjY] = coordinates;
-            lights[adjX][adjY] = toggle(lights[adjX][adjY]);
-        })
-        
-        lights[x][y] = toggle(lights[x][y]);
-    }
+    lights[x][y] = toggle(lights[x][y]);
 
     if (hasWon()) {
         displayWinnerMessageAndExit();
