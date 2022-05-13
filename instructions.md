@@ -21,3 +21,10 @@
  interaction, for instance, through the command line interface, is acceptable as well) 
  -   When the game is won, it should notify the player and end the game. 
  -   You can use “all lights turned on” as the initial board. 
+
+
+# Exercise 1: More Light
+
+## Instructions
+
+ Extend the board to also allow a 5x5 grid. The rest of the game play stays the same.
