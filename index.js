@@ -22,7 +22,7 @@ async function askForCoordinates() {
     const answer = await inquirer.prompt({
         name: 'coordinate',
         type: 'list',
-        message: 'Pick a coordinate to toggle',
+        message: 'Which light would you like to toggle?',
         choices: choices(),
     });
 
@@ -30,8 +30,8 @@ async function askForCoordinates() {
 }
 
 const ui = {
-    header: () => console.log("You are playing LightsOut (Press Ctlr + C to exit)\n"),
-    separator: () => console.log('----------\n'),
+    header: () => console.log("You are playing Lights Out (Press Ctlr + C to exit)\n"),
+    separator: () => console.log('--------------------\n'),
     board: (lights) => {
         for (const row of Object.values(lights)) {
             console.log(` ${Object.values(row).join(' ')}\n`)
