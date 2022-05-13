@@ -117,7 +117,7 @@ const randomCoordinate = () => {
 }
 
 const randomizeBoard = () => {
-    const moves = Array.from({length: 8}, (_, i) => [randomCoordinate(), randomCoordinate()])
+    const moves = Array.from({length: BOARD_SIZE}, (_, i) => [randomCoordinate(), randomCoordinate()])
 
     moves.forEach((coordinate) => {
         const [x, y] = coordinate;
