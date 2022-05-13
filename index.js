@@ -44,39 +44,53 @@ async function askForCoordinates() {
     currentCoordinate = answer.coordinate;
 }
 
-const displayHeader = () => console.log("You are playing LightsOut (Press Ctlr + C to exit)\n");
+const ui = {
+    header: () => console.log("You are playing LightsOut (Press Ctlr + C to exit)\n"),
+    separator: () => console.log('----------\n'),
+    board: (lights) => {
+        for (const row of Object.values(lights)) {
+            console.log(` ${Object.values(row).join(' ')}\n`)
+        }
+    },
+    winnerMessage: () => console.log("You won! Congrats 🎉"),
+    clear: () => console.clear(),
 
-const displaySeparator = () => console.log('----------\n');
-
-const renderRow = (row) => console.log(` ${Object.values(row).join(' ')}\n`);
-
-const displayRows = () => {
-    for (const row of Object.values(lights)) {
-        renderRow(row);
-    }
 }
 
-const displayWinnerMessage = () => console.log("You won! Congrats 🎉");
+const displayBoard = (lights) => {
+    ui.clear();
+    ui.header();
+    ui.separator();
+    ui.board(lights);
+    ui.separator();
+}
 
-const clearDisplay = () => console.clear();
-
-const display = (lights) => {
-    clearDisplay();
-    displayHeader();
-    displaySeparator();
-    displayRows(lights);
-    displaySeparator();
+const displayWinnerMessageAndExit = () => {
+    displayBoard(lights);
+    ui.winnerMessage();
+    process.exit(0);
 }
 
 const toggle = (status) => status === "on" ? "off" : "on";
 
 const adjacents = (x, y) => {
-    return [
+    const all = [
         `${x - 1},${y}`,
         `${x + 1},${y}`,
         `${x},${y + 1}`,
         `${x},${y - 1}`,
     ];
+
+    const withoutOfflimits = all.filter((coordinate) => {
+        const [x, y] = coordinate.split(',');
+
+        const xAsInt = parseInt(x);
+        const yAsInt = parseInt(y);
+
+        return [xAsInt, yAsInt].every((value) => value >= 0 && value < BOARD_SIZE);
+    });
+
+    return withoutOfflimits;
 }
 
 const hasWon = () => {
@@ -87,23 +101,14 @@ const hasWon = () => {
 
 
 const play = async () => {
-    display(lights);
+    displayBoard(lights);
 
     await askForCoordinates();
 
     if (currentCoordinate) {
         const [x, y] = currentCoordinate.split(',');
 
-        const adjancentsToToggle = adjacents(parseInt(x), parseInt(y)).filter((coordinate) => {
-            const [x, y] = coordinate.split(',');
-
-            const xAsInt = parseInt(x);
-            const yAsInt = parseInt(y);
-
-            return xAsInt >= 0 && yAsInt >= 0 && xAsInt < 3 && yAsInt < 3;
-        });
-
-        adjancentsToToggle.forEach((coordinate) => {
+        adjacents(parseInt(x), parseInt(y)).forEach((coordinate) => {
             const [x, y] = coordinate.split(',');
             lights[x][y] = toggle(lights[x][y]);
         })
@@ -112,8 +117,7 @@ const play = async () => {
     }
 
     if (hasWon()) {
-        displayWinnerMessage();
-        process.exit(0);
+        displayWinnerMessageAndExit();
     };
 
     play();
