@@ -4,7 +4,7 @@ const inquirer = require('inquirer');
 
 // could be passed in as a configuration value
 const BOARD_SIZE = 5;
-const INITIAL_STATUS = "red";
+const INITIAL_STATUS = "on";
 
 const rows = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => INITIAL_STATUS));
 const lights = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => ({...rows})));
@@ -58,10 +58,8 @@ const displayWinnerMessageAndExit = () => {
 
 const toggle = (status) => {
     const lifecycle = {
-        "red": { "next": "green" },
-        "green": { "next": "blue" },
-        "blue": { "next": "off" },
-        "off": { "next": "red" },
+        [INITIAL_STATUS]: { "next": "off" },
+        "off": { "next": INITIAL_STATUS },
     }
 
     return lifecycle[status].next;
@@ -105,7 +103,7 @@ const play = async () => {
     await askForCoordinates();
 
     const [x, y] = fromStringsToIntegers(currentCoordinate);
-    
+
     adjacents(x, y).forEach((coordinates) => {
         const [adjX, adjY] = coordinates;
         lights[adjX][adjY] = toggle(lights[adjX][adjY]);
