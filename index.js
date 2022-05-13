@@ -2,6 +2,8 @@
 
 const inquirer = require('inquirer');
 
+const BOARD_SIZE = 3;
+
 const lights = {
     "0": {
         "0": "on",
