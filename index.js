@@ -97,6 +97,34 @@ const hasWon = () => {
         .every((status) => status === "off"));
 }
 
+const updateBoardWithCoordinates = (x, y) => {
+    adjacents(x, y).forEach((coordinates) => {
+        const [adjX, adjY] = coordinates;
+        lights[adjX][adjY] = toggle(lights[adjX][adjY]);
+    })
+
+    lights[x][y] = toggle(lights[x][y]);
+}
+
+const getRandomIntInclusive = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const randomCoordinate = () => {
+    return getRandomIntInclusive(0, BOARD_SIZE - 1);
+}
+
+const randomizeBoard = () => {
+    const moves = Array.from({length: 8}, (_, i) => [randomCoordinate(), randomCoordinate()])
+
+    moves.forEach((coordinate) => {
+        const [x, y] = coordinate;
+        updateBoardWithCoordinates(x, y);
+    })
+}
+
 const play = async () => {
     displayBoard(lights);
 
@@ -104,12 +132,7 @@ const play = async () => {
 
     const [x, y] = fromStringsToIntegers(currentCoordinate);
 
-    adjacents(x, y).forEach((coordinates) => {
-        const [adjX, adjY] = coordinates;
-        lights[adjX][adjY] = toggle(lights[adjX][adjY]);
-    })
-
-    lights[x][y] = toggle(lights[x][y]);
+    updateBoardWithCoordinates(x, y)
 
     if (hasWon()) {
         displayWinnerMessageAndExit();
@@ -118,4 +141,6 @@ const play = async () => {
     play();
 }
 
+randomizeBoard();
 play();
+
