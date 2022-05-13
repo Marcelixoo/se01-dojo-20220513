@@ -2,9 +2,11 @@
 
 const inquirer = require('inquirer');
 
-const BOARD_SIZE =5;
+// could be passed in as a configuration value
+const BOARD_SIZE = 5;
+const INITIAL_STATUS = "red";
 
-const rows = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => "on"));
+const rows = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => INITIAL_STATUS));
 const lights = Object.assign({}, Array.from({ length: BOARD_SIZE }, () => ({...rows})));
 
 const choices = () => {
@@ -54,7 +56,16 @@ const displayWinnerMessageAndExit = () => {
     process.exit(0);
 }
 
-const toggle = (status) => status === "on" ? "off" : "on";
+const toggle = (status) => {
+    const lifecycle = {
+        "red": { "next": "green" },
+        "green": { "next": "blue" },
+        "blue": { "next": "off" },
+        "off": { "next": "red" },
+    }
+
+    return lifecycle[status].next;
+};
 
 const adjacents = (x, y) => {
     const all = [
